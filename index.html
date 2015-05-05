@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Todo list</title>
+<link rel="stylesheet" type="text/css" href="todo.css">
+</head>
+<body>
+<h3>ToDo:</h3>
+<hr>
+<div id="left-pane">
+<h4>Syncing</h4>
+<p><button type="button" id="revert">Revert from synced</button></p>
+<div id="rev-pass"></div>
+<hr>
+<h4>Import</h4>
+<form action="php/import.php" method="post"
+enctype="multipart/form-data">
+<label for="type-sel">Filetype:</label>
+<select name="type-sel">
+<option>JSON</option>
+<option>Markdown</option>
+</select>
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Import file">
+</form>
+<hr>
+<h4>Export</h4>
+<p><button type="button" id="exp-json">Export JSON</button></p>
+<p><button type="button" id="exp-md">Export Markdown</button></p>
+<hr>
+<div id="imp-exp-lnks"></div>
+</div>
+<div id="main-pane">
+<div id="buttons">
+<button type="button" id="edit">Edit all</button>
+</div>
+<div id="todo-list">
+Sorry, something went wrong!
+</div>
+<div id="edit-ta">
+</div>
+</div>
+<script src="js/read-and-write.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/main-funcs.js"></script>
+<script src="js/sav-rev.js"></script>
+<script src="js/imp-exp.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

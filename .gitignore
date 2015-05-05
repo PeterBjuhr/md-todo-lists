@@ -1,0 +1,9 @@
+# JSON and md
+*.json
+*.md
+
+# hashed pass
+.hashedpass
+
+# exclude backup folder
+/backup
