@@ -196,12 +196,12 @@ function openAll(){
 
 function clickCloseSublist(){
 
-	closeSubList(this);
+	closeSubList(this.parentNode, this);
 }
 
-function closeSubList(elem){
+function closeSubList(parent, elem){
 	
-	elem.parentNode.setAttribute("class", "closed");
+	parent.setAttribute("class", "closed");
 	elem.setAttribute("class", "arrow-down");
 	elem.onclick = clickOpenSublist;
 	var refArr = elem.nextSibling.nextSibling.id.split("-");
@@ -210,7 +210,23 @@ function closeSubList(elem){
 	storeTodo();
 }
 
-//return different colors depending on the date 
+function closeAll(){
+
+	var mainUl = document.getElementById("m");
+	var mainList = mainUl.getElementsByTagName("li");
+	
+	for (var i=0; i < mainList.length; i++) {
+		if(mainList[i].className == "open"){
+			var parent = mainList[i];
+			var arrow = parent.getElementsByClassName("arrow-up")[0];
+			closeSubList(parent, arrow);
+		}
+	}
+}
+
+/*
+ * return different colors depending on the date
+ */
 function getPrioColor(date){
 	var prio = new Date();
 	var old = new Date();

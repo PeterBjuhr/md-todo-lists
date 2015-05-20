@@ -36,3 +36,7 @@ editButt.onclick = editMode;
 //open all button
 var openAllButt = document.getElementById("open-all");
 openAllButt.onclick = openAll;
+
+//close all button
+var closeAllButt = document.getElementById("close-all");
+closeAllButt.onclick = closeAll;
