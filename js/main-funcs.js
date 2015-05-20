@@ -155,32 +155,42 @@ function enableFolding(){
 
 	for(var o = 0; o < openPars.length; o ++ ){
 		
-		openPars[o].onclick = closeSubList;
+		openPars[o].onclick = clickCloseSublist;
 	}
 
 	for(var c = 0; c < closedPars.length; c ++ ){
 		
-		closedPars[c].onclick = openSubList;
+		closedPars[c].onclick = clickOpenSublist;
 	}
 }
+
+function clickOpenSublist(){
+
+	openSubList(this);
+}
 	
-function openSubList(){
+function openSubList(elem){
 	
-	this.parentNode.setAttribute("class", "open");
-	this.setAttribute("class", "arrow-up");
-	this.onclick = closeSubList;
-	var refArr = this.nextSibling.nextSibling.id.split("-");
+	elem.parentNode.setAttribute("class", "open");
+	elem.setAttribute("class", "arrow-up");
+	elem.onclick = clickCloseSublist;
+	var refArr = elem.nextSibling.nextSibling.id.split("-");
 	var parentTask = findObjFromRef(refArr);
 	parentTask.isClosed = false;
 	storeTodo();
 }
 
-function closeSubList(){
+function clickCloseSublist(){
+
+	closeSubList(this);
+}
+
+function closeSubList(elem){
 	
-	this.parentNode.setAttribute("class", "closed");
-	this.setAttribute("class", "arrow-down");
-	this.onclick = openSubList;
-	var refArr = this.nextSibling.nextSibling.id.split("-");
+	elem.parentNode.setAttribute("class", "closed");
+	elem.setAttribute("class", "arrow-down");
+	elem.onclick = clickOpenSublist;
+	var refArr = elem.nextSibling.nextSibling.id.split("-");
 	var parentTask = findObjFromRef(refArr);
 	parentTask.isClosed = true;
 	storeTodo();
