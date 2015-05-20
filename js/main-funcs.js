@@ -166,18 +166,32 @@ function enableFolding(){
 
 function clickOpenSublist(){
 
-	openSubList(this);
+	openSubList(this.parentNode, this);
 }
 	
-function openSubList(elem){
+function openSubList(parent, elem){
 	
-	elem.parentNode.setAttribute("class", "open");
+	parent.setAttribute("class", "open");
 	elem.setAttribute("class", "arrow-up");
 	elem.onclick = clickCloseSublist;
 	var refArr = elem.nextSibling.nextSibling.id.split("-");
 	var parentTask = findObjFromRef(refArr);
 	parentTask.isClosed = false;
 	storeTodo();
+}
+
+function openAll(){
+
+	var mainUl = document.getElementById("m");
+	var mainList = mainUl.getElementsByTagName("li");
+	
+	for (var i=0; i < mainList.length; i++) {
+		if(mainList[i].className == "closed"){
+			var parent = mainList[i];
+			var arrow = parent.getElementsByClassName("arrow-down")[0];
+			openSubList(parent, arrow);
+		}
+	}
 }
 
 function clickCloseSublist(){

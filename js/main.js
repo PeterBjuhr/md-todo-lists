@@ -32,3 +32,7 @@ writeMainList();
 var editButt = document.getElementById("edit");
 editButt.listParent = obj;
 editButt.onclick = editMode;
+
+//open all button
+var openAllButt = document.getElementById("open-all");
+openAllButt.onclick = openAll;
