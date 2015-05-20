@@ -13,7 +13,7 @@ function exportJson(){
 	if(pass===undefined || pass===null){
 		alert("Nothing to export. Manage your list with save and revert.");
 	}else{
-		window.location.assign("export.php?type=json&pass="+pass);
+		window.location.assign("php/export.php?type=json&pass="+pass);
 	}
 }
 
@@ -22,6 +22,6 @@ function exportMD(){
 	if(pass===undefined || pass===null){
 		alert("Can't export. Manage your list with save and revert.");
 	}else{
-		window.location.assign("export.php?type=md&pass="+pass);
+		window.location.assign("php/export.php?type=md&pass="+pass);
 	}
 }
