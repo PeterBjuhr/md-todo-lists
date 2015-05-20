@@ -40,3 +40,7 @@ openAllButt.onclick = openAll;
 //close all button
 var closeAllButt = document.getElementById("close-all");
 closeAllButt.onclick = closeAll;
+
+//open due today button
+var openTodayButt = document.getElementById("open-today");
+openTodayButt.onclick = openTodays;

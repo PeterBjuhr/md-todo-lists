@@ -194,6 +194,36 @@ function openAll(){
 	}
 }
 
+function openTodays(){
+
+	var mainUl = document.getElementById("m");
+	var mainList = mainUl.getElementsByTagName("li");
+	
+	for (var i=0; i < mainList.length; i++) {
+		if(mainList[i].className == "closed"){
+			var parent = mainList[i];
+			var subList = parent.getElementsByTagName("ul")[0];
+			var parentTask = findObjFromRef(subList.id.split("-"));
+			if(sublistHasToday(parentTask.tlist)){
+				openParents(parent);
+			}
+		}
+	}
+}
+
+function openParents(elem){
+
+	var mainUl = document.getElementById("m");
+	
+	while(!(mainUl.isSameNode(elem))){
+		if(elem.tagName == "LI" && elem.className == "closed"){
+			var arrow = elem.getElementsByClassName("arrow-down")[0];
+			openSubList(elem, arrow);
+		}
+		elem = elem.parentNode;
+	}
+}
+
 function clickCloseSublist(){
 
 	closeSubList(this.parentNode, this);
@@ -225,8 +255,24 @@ function closeAll(){
 }
 
 /*
- * return different colors depending on the date
+ * Checking the dates
  */
+function sublistHasToday(sublist){
+
+	var prio = new Date();
+	for(var i = 0; i < sublist.length; i ++ ){
+		var date = sublist[i].date;
+		if(date	&&
+		prio.getDate() == date.getDate() &&
+		prio.getMonth() == date.getMonth() &&
+		prio.getYear() == date.getYear()){
+			return true;
+		}
+	}
+}
+
+	
+//return different colors depending on the date
 function getPrioColor(date){
 	var prio = new Date();
 	var old = new Date();
