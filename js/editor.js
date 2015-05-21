@@ -45,6 +45,7 @@ function showEditor(){
 		storeTodo();
 		writeMainList();
 		saveJson();
+		closeAll();
 	}
 	
 	taEditDiv.appendChild(newp);
