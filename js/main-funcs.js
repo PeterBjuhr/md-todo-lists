@@ -75,7 +75,9 @@ function writeSubList(listParent, listArr, arrRef){
 				}
 				tdate=document.createTextNode(listArr[i].date.toDateString());
 				newstro=document.createElement("strong");
-				newstro.style.color = getPrioColor(listArr[i].date);
+				var prio = getPrioColor(listArr[i].date);			
+				listArr[i].date.prio = prio;
+				newstro.style.color = prio.color;
 				newstro.appendChild(tdate);
 				newli.appendChild(newstro);	
 			}	
@@ -194,7 +196,7 @@ function openAll(){
 	}
 }
 
-function openTodays(){
+function openPassed(){
 
 	var mainUl = document.getElementById("m");
 	var mainList = mainUl.getElementsByTagName("li");
@@ -204,7 +206,24 @@ function openTodays(){
 			var parent = mainList[i];
 			var subList = parent.getElementsByTagName("ul")[0];
 			var parentTask = findObjFromRef(subList.id.split("-"));
-			if(sublistHasToday(parentTask.tlist)){
+			if(sublistHasPassed(parentTask.tlist)){
+				openParents(parent);
+			}
+		}
+	}
+}
+
+function openByPrioColor(prio){
+
+	var mainUl = document.getElementById("m");
+	var mainList = mainUl.getElementsByTagName("li");
+	
+	for (var i=0; i < mainList.length; i++) {
+		if(mainList[i].className == "closed"){
+			var parent = mainList[i];
+			var subList = parent.getElementsByTagName("ul")[0];
+			var parentTask = findObjFromRef(subList.id.split("-"));
+			if(sublistHasDuePrio(prio, parentTask.tlist)){
 				openParents(parent);
 			}
 		}
@@ -257,76 +276,85 @@ function closeAll(){
 /*
  * Checking the dates
  */
-function sublistHasToday(sublist){
 
-	var prio = new Date();
+function sublistHasPassed(sublist){
+
+	var now = new Date();
+	
 	for(var i = 0; i < sublist.length; i ++ ){
 		var date = sublist[i].date;
-		if(date	&&
-		prio.getDate() == date.getDate() &&
-		prio.getMonth() == date.getMonth() &&
-		prio.getYear() == date.getYear()){
+		if(date && prioColors.today != date.prio && now > date){
 			return true;
 		}
 	}
 }
-
 	
-//return different colors depending on the date
+function sublistHasDuePrio(prio, sublist){
+
+	for(var i = 0; i < sublist.length; i ++ ){
+		var date = sublist[i].date;
+		if(date && prio == date.prio){
+			return true;
+		}
+	}
+}
+	
+//return the prio color depending on the date
 function getPrioColor(date){
+
 	var prio = new Date();
 	var old = new Date();
 	
 	//really old?
-	old.setDate(prio.getDate() - 100);
+	old.setDate(prio.getDate() + prioColors.rold.timediff);
 	if (old>date){
-		return "rgb(180, 157, 167)";
+		return prioColors.rold;
 	}
 	
 	//old?
-	old.setDate(prio.getDate() - 37);
+	old.setDate(prio.getDate() + prioColors.old.timediff);
 	if (old>date){
-		return "rgb(237, 197, 217)";
+		return prioColors.old;
 	}
 	
 	//today?
 	if(prio.getDate() == date.getDate() 
 	&& prio.getMonth() == date.getMonth()
 	&& prio.getYear() == date.getYear()){
-		return "rgb(255, 93, 2)";
+		return prioColors.today;
 	}
 	
 	//passed date?
 	if (prio>date){
-		return "rgb(192, 40, 11)";
+		return prioColors.passd;
 	}
 	
 	//next day?
-	prio.setDate(prio.getDate() + 1);
+	prio.setDate(prio.getDate() + prioColors.nextd.timediff);
 	if (prio>date){
-		return "rgb(250, 182, 6)";
+		return prioColors.nextd;
 	}
 	
 	//within three days?
-	prio.setDate(prio.getDate() + 3);
+	prio.setDate(prio.getDate() + prioColors.threed.timediff);
 	if (prio>date){
-		return "rgb(232, 221, 6)";
+		return prioColors.threed;
 	}
 	
 	//within a week?
-	prio.setDate(prio.getDate() + 7);
+	prio.setDate(prio.getDate() + prioColors.week.timediff);
 	if (prio>date){
-		return "rgb(126, 243, 59)";
+		return prioColors.week;
 	}
 	
 	//within four weeks?
-	prio.setDate(prio.getDate() + 28);
+	prio.setDate(prio.getDate() + prioColors.fweeks.timediff);
 	if (prio>date){
-		return "rgb(11, 221, 239)";
+		return prioColors.fweeks;
 	}
 	
 	//pretty safe
-	return "rgb(143, 171, 238)";
+	return prioColors.future;
 }
 
 /*******************************************
