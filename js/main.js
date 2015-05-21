@@ -35,11 +35,6 @@ for(i = 0; i < keysSorted.length; i++) {
 	palette.appendChild(prioCol);
 }
 
-//edit button
-var editButt = document.getElementById("edit");
-editButt.listParent = obj;
-editButt.onclick = editMode;
-
 //open all button
 var openAllButt = document.getElementById("open-all");
 openAllButt.onclick = openAll;
@@ -84,3 +79,8 @@ checkStorage();
 
 //fetch list and write it to html
 writeMainList();
+
+//edit button
+var editButt = document.getElementById("edit");
+editButt.listParent = obj;
+editButt.onclick = editMode;
