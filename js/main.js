@@ -3,13 +3,13 @@ var editor = {};
 
 var prioColors = {
 	rold: {	color: "rgb(180, 157, 167)", timediff: -100 },
-	old: { color: "rgb(237, 197, 217)", timediff: - 28},
+	old: { color: "rgb(237, 197, 217)"},
 	passd: { color: "rgb(192, 40, 11)", timediff: - 5},
 	today: { color: "rgb(255, 93, 2)", timediff: 0},
 	nextd: { color: "rgb(250, 182, 6)", timediff: 1},
 	threed: { color: "rgb(232, 221, 6)", timediff: 3 },
 	week: { color: "rgb(126, 243, 59)", timediff: 7},
-	fweeks: { color: "rgb(11, 221, 239)", timediff: 28},
+	upcom: { color: "rgb(11, 221, 239)"},
 	future: { color: "rgb(143, 171, 238)", timediff: 100}
 };
 

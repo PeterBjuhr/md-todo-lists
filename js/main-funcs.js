@@ -312,7 +312,8 @@ function getPrioColor(date){
 	}
 	
 	//old?
-	old.setDate(prio.getDate() + prioColors.old.timediff);
+	old = new Date();
+	old.setDate(prio.getDate() + prioColors.passd.timediff);
 	if (old>date){
 		return prioColors.old;
 	}
@@ -336,24 +337,27 @@ function getPrioColor(date){
 	}
 	
 	//within three days?
+	prio = new Date();
 	prio.setDate(prio.getDate() + prioColors.threed.timediff);
 	if (prio>date){
 		return prioColors.threed;
 	}
 	
 	//within a week?
+	prio = new Date();
 	prio.setDate(prio.getDate() + prioColors.week.timediff);
 	if (prio>date){
 		return prioColors.week;
 	}
 	
 	//within four weeks?
-	prio.setDate(prio.getDate() + prioColors.fweeks.timediff);
+	prio = new Date();
+	prio.setDate(prio.getDate() + prioColors.future.timediff);
 	if (prio>date){
-		return prioColors.fweeks;
+		return prioColors.upcom;
 	}
 	
-	//pretty safe
+	//pretty far ahead
 	return prioColors.future;
 }
 
