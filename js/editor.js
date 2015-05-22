@@ -45,7 +45,9 @@ function showEditor(){
 		storeTodo();
 		writeMainList();
 		saveJson();
-		closeAll();
+		if(editor.listParent == obj){
+			closeAll();
+		}
 	}
 	
 	taEditDiv.appendChild(newp);
