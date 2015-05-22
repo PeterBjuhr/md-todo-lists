@@ -2,15 +2,15 @@ var obj;
 var editor = {};
 
 var prioColors = {
-	rold: {	color: "rgb(180, 157, 167)", timediff: -100 },
-	old: { color: "rgb(237, 197, 217)"},
-	passd: { color: "rgb(192, 40, 11)", timediff: - 5},
-	today: { color: "rgb(255, 93, 2)", timediff: 0},
-	nextd: { color: "rgb(250, 182, 6)", timediff: 1},
-	threed: { color: "rgb(232, 221, 6)", timediff: 3 },
-	week: { color: "rgb(126, 243, 59)", timediff: 7},
-	upcom: { color: "rgb(11, 221, 239)"},
-	future: { color: "rgb(143, 171, 238)", timediff: 100}
+	rold: {	descr: "really old", color: "rgb(180, 157, 167)", timediff: -100 },
+	old: { descr: "old", color: "rgb(237, 197, 217)"},
+	passd: { descr: "just passed", color: "rgb(192, 40, 11)", timediff: - 5},
+	today: { descr: "today", color: "rgb(255, 93, 2)", timediff: 0},
+	nextd: { descr: "tomorrow", color: "rgb(250, 182, 6)", timediff: 1},
+	threed: { descr: "in 3 days", color: "rgb(232, 221, 6)", timediff: 3 },
+	week: { descr: "in a week", color: "rgb(126, 243, 59)", timediff: 7},
+	upcom: { descr: "upcoming", color: "rgb(11, 221, 239)"},
+	future: { descr: "far in the future", color: "rgb(143, 171, 238)", timediff: 100}
 };
 
 var keysSorted = Object.keys(prioColors).sort(function(a,b){
@@ -23,12 +23,16 @@ for(i = 0; i < keysSorted.length; i++) {
 	var prioCol = document.createElement("div");
 	prioCol.className = "prio-palette";
 	prioCol.style.backgroundColor = prioColors[keysSorted[i]].color;
+	prioCol.descr = prioColors[keysSorted[i]].descr;
 	prioCol.id = keysSorted[i];
 	prioCol.onclick = function(){
 		//close all first?
 		closeAll();
 		openByPrioColor(prioColors[this.id]);
 	};
+	prioCol.onmouseover = function(){
+		console.log(this.descr);
+	}
 	palette.appendChild(prioCol);
 }
 
