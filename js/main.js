@@ -1,5 +1,6 @@
 var obj; 
 var editor = {};
+var infoText = document.getElementById("info-text");
 
 var prioColors = {
 	rold: {	descr: "really old", color: "rgb(180, 157, 167)", timediff: -100 },
@@ -31,7 +32,8 @@ for(i = 0; i < keysSorted.length; i++) {
 		openByPrioColor(prioColors[this.id]);
 	};
 	prioCol.onmouseover = function(){
-		console.log(this.descr);
+		infoText.innerHTML = this.descr;
+		infoText.style.color = this.style.backgroundColor;
 	}
 	palette.appendChild(prioCol);
 }

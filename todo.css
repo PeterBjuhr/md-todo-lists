@@ -13,6 +13,24 @@ label {
 	display: block;
 }
 
+#todo-text {
+	float: left;
+}
+
+#info-pane {
+	float: right;
+	width: 76%;
+	padding: 2px;
+}
+
+#info-text {
+	padding-left: 21%;
+}
+
+hr.clear-float {
+	clear: both;
+}
+
 #left-pane {
 	float: left;
 	height: 100%;
