@@ -21,10 +21,7 @@ var palette = document.getElementById("palette");
 	
 for(i = 0; i < keysSorted.length; i++) {
 	var prioCol = document.createElement("div");
-	prioCol.style.display = "inline-block";
-	prioCol.style.width = "5px";
-	prioCol.style.padding = "8px 21px";
-	prioCol.style.cursor = "pointer";
+	prioCol.className = "prio-palette";
 	prioCol.style.backgroundColor = prioColors[keysSorted[i]].color;
 	prioCol.id = keysSorted[i];
 	prioCol.onclick = function(){
