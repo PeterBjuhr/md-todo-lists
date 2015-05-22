@@ -367,18 +367,26 @@ function getPrioColor(date){
 }
 
 /*
+ * Setting the info text
+ */
+ 
+function prioDescrInfoText(){
+	infoText.innerHTML = this.descr;
+	infoText.style.color = this.style.backgroundColor;
+}
+
+function showEditorTip(){
+	infoText.innerHTML = "Use tab key to create nested task.";
+	infoText.style.color = "black";
+}
+
+/*
  * Create nodes
  */
- function createBttn(txt){
+function createBttn(txt){
 	bttn=document.createElement("button");
 	bttn.appendChild(document.createTextNode(txt));
 	return bttn;
 }
 
-/*
- * Setting the info text
- */
- function prioDescrInfoText(){
-	infoText.innerHTML = this.descr;
-	infoText.style.color = this.style.backgroundColor;
-}
+

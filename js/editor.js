@@ -6,6 +6,7 @@ function setEditorContent(txt){
 
 function editMode(){
 	showEditor();
+	showEditorTip();
 	editor.listParent = this.listParent;
 	writeListToEditor();
 }
