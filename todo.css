@@ -26,9 +26,10 @@ label {
 
 .prio-palette {
 	display: inline-block;
-	width: 5px;
+	width: 3px;
 	padding: 8px 21px;
 	cursor: pointer;
+	margin: 1px;
 }
 
 #editor {
