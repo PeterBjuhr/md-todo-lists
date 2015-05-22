@@ -26,15 +26,8 @@ for(i = 0; i < keysSorted.length; i++) {
 	prioCol.style.backgroundColor = prioColors[keysSorted[i]].color;
 	prioCol.descr = prioColors[keysSorted[i]].descr;
 	prioCol.id = keysSorted[i];
-	prioCol.onclick = function(){
-		//close all first?
-		closeAll();
-		openByPrioColor(prioColors[this.id]);
-	};
-	prioCol.onmouseover = function(){
-		infoText.innerHTML = this.descr;
-		infoText.style.color = this.style.backgroundColor;
-	}
+	prioCol.onclick = clickOpenColor;
+	prioCol.onmouseover = prioDescrInfoText;
 	palette.appendChild(prioCol);
 }
 

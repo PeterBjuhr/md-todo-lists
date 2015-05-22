@@ -1,6 +1,5 @@
-/*************************
+/*
  * Main Functions
- * 
  */
 function checkStorage(){
 	if(typeof(Storage)!==undefined){
@@ -230,6 +229,12 @@ function openByPrioColor(prio){
 	}
 }
 
+function clickOpenColor(){
+	//close all first?
+	closeAll();
+	openByPrioColor(prioColors[this.id]);
+}
+
 function openParents(elem){
 
 	var mainUl = document.getElementById("m");
@@ -361,11 +366,19 @@ function getPrioColor(date){
 	return prioColors.future;
 }
 
-/*******************************************
+/*
  * Create nodes
  */
  function createBttn(txt){
 	bttn=document.createElement("button");
 	bttn.appendChild(document.createTextNode(txt));
 	return bttn;
+}
+
+/*
+ * Setting the info text
+ */
+ function prioDescrInfoText(){
+	infoText.innerHTML = this.descr;
+	infoText.style.color = this.style.backgroundColor;
 }
