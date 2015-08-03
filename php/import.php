@@ -11,7 +11,7 @@ if($_FILES["file"]){
 	|| ($_FILES["file"]["type"] == "application/octet-stream")
 	|| ($_FILES["file"]["type"] == "text/x-markdown")
 	|| ($_FILES["file"]["type"] == "text/markdown"))
-	&& ($_FILES["file"]["size"] < 10000)
+	&& ($_FILES["file"]["size"] < 15000)
 	&& in_array($extension, $allowedExts)) {
 	  if ($_FILES["file"]["error"] > 0) {
 		$upload_info .= "Return Code: " . $_FILES["file"]["error"] . "<br>";
@@ -27,15 +27,15 @@ if($_FILES["file"]){
 	}
 }
 if($import_txt){
-	$body = '<script src="read-and-write.js"></script>';
-	$body .= '<script src="imp-exp.js"></script>';
+	$body = '<script src="../js/read-and-write.js"></script>';
+	$body .= '<script src="../js/imp-exp.js"></script>';
 	if($type_sel == "JSON"){
 		$body .= '<script>importJson("'.$import_txt.'");</script>';
 	}elseif($type_sel == "Markdown"){
-		$body .= '<script src="editor.js"></script>';
+		$body .= '<script src="../js/editor.js"></script>';
 		$body .= '<script>importMD('.json_encode($import_txt).');</script>';
 	}
-	$body .= '<script>window.location.assign("index.php");</script>';
+	$body .= '<script>window.location.assign("../");</script>';
 }elseif($upload_info){
 	$body = $upload_info;
 }else{
