@@ -223,8 +223,15 @@ function getTodo(str){
 }
 
 function convertDateStr(tdate){
-	
-	if(tdate.length==6){
+
+	//No date
+	if(tdate == "0" || tdate == "undefined"){
+		return undefined;
+	}
+
+	//Date with 6 digits
+	var ddrgx = /^\d{6}$/;
+	if(ddrgx.test(tdate)){
 		dateArr = [
 				'20'+tdate.substring(0,2),
 				tdate.substring(2,4),
@@ -232,52 +239,61 @@ function convertDateStr(tdate){
 				];
 		return new Date(dateArr.join());
 	}
+	
+	var d = new Date();
 
-	var d = new Date(); 
-	switch(tdate) {
-	case "0":
-	case "u":
-	case "undefined":
-		return undefined;
-	case "today":
-	case "now":
-	case "n":
-	case "td":
+	//Simple addition (from today)
+	var nrgx = /^\d{1,2}$/;
+	if(nrgx.test(tdate)){
+		var add = parseInt(tdate);
+		d.setDate(d.getDate() + add);
 		return d;
-	case "tomorrow":
-	case "next day":
-	case "tom":
-	case "tm":
-	case "1":
-		d.setDate(d.getDate() + 1);
-		return d;
-	case "3":
-		d.setDate(d.getDate() + 3);
-		return d;
-	case "5":
-	case "":
-		d.setDate(d.getDate() + 5);
-		return d;
-	case "week":
-	case "next week":
-	case "7":
-		d.setDate(d.getDate() + 7);
-		return d;
-	case "14":
-		d.setDate(d.getDate() + 14);
-		return d;
-	case "month":
-	case "m":
-	case "next month":
-	case "4w":
-	case "4 weeks":
-	case "four weeks":
-	case "in four weeks":
-		d.setDate(d.getDate() + 28);
-		return d;
-	default:
-		return new Date(tdate);
 	}
+
+	//Addition by weeks
+	var wrgx = /(\d)w/i;
+	var matchArr = tdate.match(wrgx);
+	if(matchArr){
+		var add = parseInt(matchArr[1]) * 7;
+		d.setDate(d.getDate() + add);
+		return d;
+	}
+
+	//Addition by month
+	var mrgx = /(\d)m/i;
+	var matchArr = tdate.match(mrgx);
+	if(matchArr){
+		var m = d.getMonth();
+		var add = parseInt(matchArr[1]);
+		d.setMonth(m + add);
+		return d;
+	}
+
+	//Keywords
+	var krgx = /^\D+$/g;
+	if(krgx.test(tdate)){ 
+		switch(tdate) {
+			case "today":
+			case "now":
+			case "n":
+			case "td":
+				return d;
+			case "tomorrow":
+			case "next day":
+			case "tom":
+			case "tm":
+				d.setDate(d.getDate() + 1);
+				return d;
+			case "next week":
+				d.setDate(d.getDate() + 7);
+				return d;
+			case "next month":
+				d.setDate(d.getDate() + 30);
+				return d;
+		}
+	}
+
+	return new Date(tdate);
 }	
 
 function clearEditor(){
