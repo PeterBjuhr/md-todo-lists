@@ -27,8 +27,8 @@ function saveJson(){
 	}else{
 		var jsoncont = JSON.stringify(obj);
 		var mdcont = editorSubList(obj.tlist, 0);
-		ajaxPost('save', 'file='+pass+'&ext=json&content='+jsoncont);
-		ajaxPost('save', 'file='+pass+'&ext=md&content='+mdcont);
+		ajaxPost('save', 'file='+pass+'&ext=json&content='+encodeURIComponent(jsoncont));
+		ajaxPost('save', 'file='+pass+'&ext=md&content='+encodeURIComponent(mdcont));
 		ajaxPost('save', 'file=hashedpass&hash='+pass+'&salt='+createPassword());
 	}
 }
@@ -135,5 +135,8 @@ function ajaxPost(phpfile, postdata){
 
 	xmlhttp.open("POST", 'php/' + phpfile + '.php',true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.setRequestHeader("Content-Length", postdata.length);
+	xmlhttp.setRequestHeader("Connection", "close");
 	xmlhttp.send(postdata);
 }
+
