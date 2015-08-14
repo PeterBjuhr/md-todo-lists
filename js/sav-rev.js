@@ -135,8 +135,6 @@ function ajaxPost(phpfile, postdata){
 
 	xmlhttp.open("POST", 'php/' + phpfile + '.php',true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.setRequestHeader("Content-Length", postdata.length);
-	xmlhttp.setRequestHeader("Connection", "close");
 	xmlhttp.send(postdata);
 }
 
