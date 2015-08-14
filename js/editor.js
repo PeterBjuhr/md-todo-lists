@@ -228,7 +228,7 @@ function getTodo(str){
 	if(roughCutArr[1] !== undefined){
 		var tdate = roughCutArr[1].replace(/[\*]/g, '');
 	}else{
-		var tdate = "0";
+		var tdate = "undef";
 	}
 	
 	datObj = convertDateStr(tdate);
@@ -239,7 +239,7 @@ function getTodo(str){
 function convertDateStr(tdate){
 
 	//No date
-	if(tdate == "0" || tdate == "undefined"){
+	if(tdate == "undef"){
 		return undefined;
 	}
 
