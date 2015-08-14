@@ -49,6 +49,9 @@ function showEditor(){
 	}
 	
 	taEditDiv.appendChild(newp);
+
+	//set editor focus
+	newta.focus();
 }
 
 function createEditorButton(color, text){
