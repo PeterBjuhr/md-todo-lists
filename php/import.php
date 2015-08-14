@@ -8,6 +8,7 @@ if($_FILES["file"]){
 
 	if ((($_FILES["file"]["type"] == "text/plaintext")
 	|| ($_FILES["file"]["type"] == "text/JSON")
+	|| ($_FILES["file"]["type"] == "application/json")
 	|| ($_FILES["file"]["type"] == "application/octet-stream")
 	|| ($_FILES["file"]["type"] == "text/x-markdown")
 	|| ($_FILES["file"]["type"] == "text/markdown"))
@@ -23,7 +24,8 @@ if($_FILES["file"]){
 		$import_txt = file_get_contents($_FILES["file"]["tmp_name"]);  
 	  }
 	}else{
-	  $upload_info .= "Invalid file [type:".$_FILES["file"]["type"]."|size:".$_FILES["file"]["size"]."]";
+	  $upload_info .= "Invalid file [type: ".$_FILES["file"]["type"] .
+					  " | size: ".$_FILES["file"]["size"] . " (Allowed 14999)]";
 	}
 }
 if($import_txt){
