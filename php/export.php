@@ -34,6 +34,6 @@ a { color: white; }
 <?php
 echo $body;
 ?>
-<div id="back"><a href="index.php">Back</a></div>
+<div id="back"><a href="../">Back</a></div>
 </body>
 </html>
