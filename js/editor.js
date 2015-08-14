@@ -24,11 +24,8 @@ function showEditor(){
 	taEditDiv.appendChild(newta);
 	
 	//enable some extra features of the editor
-	var shortcodeObj = { arr: [ 
-		{ key: 9, insert: "    " },
-		{ key: 189, insert: "- [ ] " } 
-	]};
-	enableshortcut(shortcodeObj);
+	enableSpecialKeys();
+	enableAutoreplace();
 	
 	newp=document.createElement("p");
 	newp.setAttribute("class",'r-align');
@@ -64,10 +61,16 @@ function createEditorButton(color, text){
 	return newbttn;
 }
 
-//enable shortcut in editor
-function enableshortcut(shcObj){
+//Enable special keys in editor
+function enableSpecialKeys(){
+	//Defining keys
+	var keysObj = { arr: [ 
+		{ key: 9, insert: "    " }, //tab
+	]};
+
+	//Catching the keydown events
 	newta.onkeydown = function(e){
-		var s = shcObj.arr;
+		var s = keysObj.arr;
 		for(var c in s){
 			if(e.keyCode==s[c].key){
 				e.preventDefault();
@@ -79,6 +82,14 @@ function enableshortcut(shcObj){
 	}
 }
 
+//Autocompletion in editor
+function enableAutoreplace(){
+
+	newta.onkeyup = function(){
+		this.value = this.value.replace(/^((\s{4})*)-$/gm, '$1- [ ] ');
+		this.value = this.value.replace(/(\s\*{2}\w+)(\s)(?!\*{2})$/g, '$1**$2');
+	}
+}
 /************************************
  * 
  * Write list in editor as markdown
