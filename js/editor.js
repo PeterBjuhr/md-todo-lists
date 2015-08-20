@@ -1,3 +1,4 @@
+var cursor;
 
 function setEditorContent(txt){ 
 	t=document.createTextNode(txt);
@@ -89,10 +90,31 @@ function enableSpecialKeys(){
 function enableAutoreplace(){
 
 	newta.onkeyup = function(){
-		this.value = this.value.replace(/^((\s{4})*)-$/gm, '$1- [ ] ');
-		this.value = this.value.replace(/(\s\*{2}\w+)(\s)(?!\*{2})$/g, '$1**$2');
+		this.value = this.value.replace(/^((\s{4})*)-$/gm, insertMDCheckbx);
+		this.value = this.value.replace(/(\s\*{2}\w+)(\s)(?!\*{2})$/gm, insertBoldEnd);
+
+		//Set cursor
+		if(cursor){
+			this.selectionEnd = cursor;
+			cursor = undefined;
+		}
 	}
 }
+
+function insertMDCheckbx(match, p1, p2, offset, str){
+
+	var repl = p1 + '- [ ] ';
+	cursor = offset + repl.length;
+	return repl;
+}
+
+function insertBoldEnd(match, p1, p2, offset, str){
+
+	var repl = p1 + '**' + p2;
+	cursor = offset + repl.length;
+	return repl;
+}
+
 /************************************
  * 
  * Write list in editor as markdown
