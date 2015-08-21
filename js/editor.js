@@ -245,8 +245,8 @@ function parseToDoMD(editText){
 function getTodo(str){
 	var roughCutArr = str.split('**');
 	
-	var tname = roughCutArr[0].replace(/[-\[\]\*]/g, '');
-	
+	var tname = roughCutArr[0].replace(/-\s?\[\s\]/g, '');
+
 	if(roughCutArr[1] !== undefined){
 		var tdate = roughCutArr[1].replace(/[\*]/g, '');
 	}else{
