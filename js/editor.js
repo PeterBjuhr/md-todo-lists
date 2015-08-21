@@ -243,7 +243,7 @@ function parseToDoMD(editText){
 }
 
 function getTodo(str){
-	var roughCutArr = str.split('**');
+	var roughCutArr = str.split(/\*{2}([^\*]+)(\*{2})?\s*$/);
 	
 	var tname = roughCutArr[0].replace(/-\s?\[\s\]/g, '');
 
