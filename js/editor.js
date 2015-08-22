@@ -150,11 +150,9 @@ function editorSubList(listArr, ind){
 			if(listArr[i].header){
 				rettxt += '\n';
 				rettxt += createTab(ind);
-				rettxt += "###";
 				rettxt += listArr[i].header;
 				rettxt += '\n\n';
-			}
-			
+			}			
 		}		
 		
 	}
