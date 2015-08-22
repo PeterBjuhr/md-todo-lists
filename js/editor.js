@@ -232,8 +232,7 @@ function parseToDoMD(editText){
 				}
 			}
 		}else{
-			theader = textArr[i].replace(/[-\#]/g,'');
-			newmain[p] = { header: theader.trim() };
+			newmain[p] = { header: textArr[i].trim() };
 			p++;
 		}
 	}
