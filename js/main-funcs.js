@@ -101,11 +101,20 @@ function writeSubList(listParent, listArr, arrRef){
 				newli.appendChild(editSpan);
 				
 				writeSubList(newli, listArr[i].tlist, arrRef+'-'+i);
-			}
-			
+			}			
 		}else{
-			newstro=document.createElement("h3");
-			theader=document.createTextNode(listArr[i].header);
+			var text;
+			var hmatch = listArr[i].header.match(/(#+)(.+)/);
+			if(hmatch){
+				newstro=document.createElement("h" + hmatch[1].length);
+				text = hmatch[2];
+			}else if(listArr[i].header){
+				newstro=document.createElement("p");
+				text = listArr[i].header;
+			}else{
+				continue;
+			}			
+			theader=document.createTextNode(text);
 			newstro.appendChild(theader);
 			newli.appendChild(newstro);
 		}
