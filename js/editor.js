@@ -195,7 +195,7 @@ function parseToDoMD(editText){
 	var childSteps = 0;
 	var todoParent = Array();
 	
-	var todoPatt = /\[/;
+	var todoPatt = /\-\s?\[\s\]/;
 	var tabPatt = /    /g;
 	
 	var p=0;
