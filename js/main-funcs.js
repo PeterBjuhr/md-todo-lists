@@ -46,7 +46,7 @@ function checkChecked(){
 }
 
 function writeSubList(listParent, listArr, arrRef){
-	var newul, newli, theader, newstro, parentDiv, editSpan, editSymb;
+	var newul, newli, task, newstro, parentDiv, editSpan, editSymb;
 	newul=document.createElement("ul");
 	newul.setAttribute("class","task-list");
 	newul.setAttribute("id",arrRef);
@@ -65,9 +65,12 @@ function writeSubList(listParent, listArr, arrRef){
 			hidd.type = "hidden";
 			hidd.value = i;
 			newli.appendChild(hidd);
+
+			task=document.createElement("span");
+			task.setAttribute("class", "task");
+			newli.appendChild(task);			
+			task.innerHTML = basicMD(listArr[i].name) + '&nbsp;';
 			
-			tname=document.createTextNode(listArr[i].name+' ');
-			newli.appendChild(tname);
 			if(listArr[i].date !== undefined){
 				if(typeof(listArr[i].date == "string")){
 					listArr[i].date = new Date(listArr[i].date);
@@ -106,22 +109,33 @@ function writeSubList(listParent, listArr, arrRef){
 			var text;
 			var hmatch = listArr[i].header.match(/(#+)(.+)/);
 			if(hmatch){
-				newstro=document.createElement("h" + hmatch[1].length);
+				newstro = document.createElement("h" + hmatch[1].length);
 				text = hmatch[2];
 			}else if(listArr[i].header){
-				newstro=document.createElement("p");
+				newstro = document.createElement("p");
 				text = listArr[i].header;
 			}else{
 				continue;
 			}			
-			theader=document.createTextNode(text);
-			newstro.appendChild(theader);
+			newstro.innerHTML = basicMD(text);
 			newli.appendChild(newstro);
 		}
 		
 		newul.appendChild(newli);
 	}
 	listParent.appendChild(newul);
+}
+
+//Basic markdown parsing
+function basicMD(mdtext){
+
+	mdtext = mdtext.replace(/\*{2}(.+)\*{2}/g, '<strong>$1</strong>');
+	mdtext = mdtext.replace(/\*{1}([^\*]+)\*{1}/g, '<em>$1</em>');
+	mdtext = mdtext.replace(/`(.+)`/g, '<code>$1</code>');
+	mdtext = mdtext.replace(/~~(.+)~~/g, '<s>$1</s>');
+	mdtext = mdtext.replace(/\[(.+)\]\((.+)\)/g, '<a href="$2">$1</a>');
+
+	return mdtext;
 }
 
 function findArrayFromRef(refArr){
