@@ -3,36 +3,41 @@ function initStorage(){
 	//initial demo list
 	obj = { "tlist":[
 		{
-			"name": 'Do it!',
+			"name": '**Do it!**',
 			"date": new Date()
 		},
 		{
 			"name": 'nested',
-			"date": new Date(2014,5,23),
 			"tlist": [
 			{
 				"name": 'nested task',
-				"date": new Date(2014,5,23)
 			}
 			] 
 		},
 		{
-			"name": 'Edit this list',
+			"name": '*Edit this list*',
 			"date": new Date()
 		},
 		{
-			"header": 'Add header'
+			"header": '### Add header'
 		},
 		{
 			"name": 'task with header',
 			"date": new Date()
 		},
 		{
-			"header": 'Old stuff'
+			"header": '# Important'
 		},
 		{
-			"name": 'task with header',
-			"date": new Date(79,12,31)
+			"name": 'must be done today',
+			"date": new Date()
+		},
+		{
+			"header": '## Old stuff'
+		},
+		{
+			"name": '~~done but still useful to have~~',
+			"date": new Date('12,24,2009')
 		}
 		]
 	};
