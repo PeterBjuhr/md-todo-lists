@@ -115,6 +115,7 @@ function getContentForRevert(){
 			importJson(xmlhttp.responseText);
 			fetchTodo();
 			writeMainList();
+			editButt.listParent = obj;
 		}
 	}
 
