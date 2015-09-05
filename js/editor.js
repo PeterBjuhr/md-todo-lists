@@ -33,26 +33,26 @@ function showEditor(){
 	
 	var orangButt = createEditorButton('orange', 'Cancel')
 	newp.appendChild(orangButt);
-	orangButt.onclick = function(){
-		writeMainList();
-	}
+	orangButt.onclick = writeMainList;
 	
 	var greenButt = createEditorButton('green', 'Update')
 	newp.appendChild(greenButt);
-	greenButt.onclick = function(){
-		newObjFromEditor();
-		storeTodo();
-		writeMainList();
-		saveJson();
-		if(editor.listParent == obj){
-			closeAll();
-		}
-	}
+	greenButt.onclick = saveEditorContent;
 	
 	taEditDiv.appendChild(newp);
 
 	//set editor focus
 	newta.focus();
+}
+
+function saveEditorContent(){
+	newObjFromEditor();
+	storeTodo();
+	writeMainList();
+	saveJson();
+	if(editor.listParent == obj){
+		closeAll();
+	}
 }
 
 function createEditorButton(color, text){
