@@ -2,10 +2,10 @@
 $fail = true;
 $userpass = $_REQUEST['pass'];
 $file_type = $_REQUEST['type'];
-$hash = file_get_contents('.hashedpass');
+$hash = file_get_contents('../synced/.hashedpass');
 
 $file_name  = "todo.".$file_type;
-$read_file  = $userpass.".".$file_type;
+$read_file  = '../synced/' . $userpass . "." . $file_type;
 
 if (crypt($userpass, $hash) == $hash) {
 	header("Content-disposition: attachment; filename=".$file_name);

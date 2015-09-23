@@ -7,8 +7,8 @@ $salt = $_POST['salt'];
 
 if($hash){
 	$hashed_password = crypt($hash, $salt);
-	file_put_contents('.'.$file, $hashed_password);
+	file_put_contents('../synced/.'.$file, $hashed_password);
 }else{
-	file_put_contents($file.'.'.$ext, $content);
+	file_put_contents('../synced/' . $file.'.'.$ext, $content);
 }
 ?>
