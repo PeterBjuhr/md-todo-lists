@@ -71,7 +71,8 @@ function enableSpecialKeys(){
 	//Defining keys
 	keysObj = { arr: [
 		{ key: 9, insert: "    " }, //tab
-		{ key: 27, func: writeMainList } //escape
+		{ key: 27, func: writeMainList }, //escape
+		{ key: 13, func: saveEditorContent, modkey: 'ctrlKey' } // Ctrl + Enter
 	]};
 
 	//Catching the keydown events
@@ -80,9 +81,15 @@ function enableSpecialKeys(){
 
 //Do special key Action
 function doSpecialKeys(e){
+	var modkeyCond;
 	var s = keysObj.arr;
 	for(var c in s){
-		if(e.keyCode==s[c].key){
+		if(s[c].hasOwnProperty('modkey')){
+			modkeyCond = e[s[c].modkey];
+		}else{
+			modkeyCond = true;
+		}
+		if(modkeyCond && e.keyCode==s[c].key){
 			e.preventDefault();
 			if(s[c].hasOwnProperty('insert')){
 				var sel = this.selectionStart;
