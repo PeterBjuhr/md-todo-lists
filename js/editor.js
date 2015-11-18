@@ -1,6 +1,7 @@
 var cursor;
+var keysObj;
 
-function setEditorContent(txt){ 
+function setEditorContent(txt){
 	t=document.createTextNode(txt);
 	newta.appendChild(t);
 }
@@ -12,9 +13,9 @@ function editMode(){
 	writeListToEditor();
 }
 /******************************************
- * 
+ *
  * Show editor
- * 
+ *
  */
 function showEditor(){
 	clearEditor();
@@ -23,22 +24,22 @@ function showEditor(){
 	newta=document.createElement("textarea");
 	newta.setAttribute("id",'editor');
 	taEditDiv.appendChild(newta);
-	
+
 	//enable some extra features of the editor
 	enableSpecialKeys();
 	enableAutoreplace();
-	
+
 	newp=document.createElement("p");
 	newp.setAttribute("class",'r-align');
-	
+
 	var orangButt = createEditorButton('orange', 'Cancel')
 	newp.appendChild(orangButt);
 	orangButt.onclick = writeMainList;
-	
+
 	var greenButt = createEditorButton('green', 'Update')
 	newp.appendChild(greenButt);
 	greenButt.onclick = saveEditorContent;
-	
+
 	taEditDiv.appendChild(newp);
 
 	//set editor focus
@@ -61,26 +62,34 @@ function createEditorButton(color, text){
 	newbttn.setAttribute("class", color+'-butt');
 	tupd=document.createTextNode(text);
 	newbttn.appendChild(tupd);
-	
+
 	return newbttn;
 }
 
 //Enable special keys in editor
 function enableSpecialKeys(){
 	//Defining keys
-	var keysObj = { arr: [ 
+	keysObj = { arr: [
 		{ key: 9, insert: "    " }, //tab
+		{ key: 27, func: writeMainList } //escape
 	]};
 
 	//Catching the keydown events
-	newta.onkeydown = function(e){
-		var s = keysObj.arr;
-		for(var c in s){
-			if(e.keyCode==s[c].key){
-				e.preventDefault();
+	newta.onkeydown = doSpecialKeys;
+}
+
+//Do special key Action
+function doSpecialKeys(e){
+	var s = keysObj.arr;
+	for(var c in s){
+		if(e.keyCode==s[c].key){
+			e.preventDefault();
+			if(s[c].hasOwnProperty('insert')){
 				var sel = this.selectionStart;
 				this.value = this.value.substring(0,sel) + s[c].insert + this.value.substring(sel);
 				this.selectionEnd = sel+s[c].insert.length;
+			}else if(s[c].hasOwnProperty('func')){
+				s[c].func();
 			}
 		}
 	}
@@ -116,9 +125,9 @@ function insertBoldEnd(match, p1, p2, offset, str){
 }
 
 /************************************
- * 
+ *
  * Write list in editor as markdown
- * 
+ *
  */
 function writeListToEditor(){
 	setEditorContent(editorSubList(editor.listParent.tlist, 0));
@@ -126,11 +135,11 @@ function writeListToEditor(){
 
 function editorSubList(listArr, ind){
 	var rettxt = '';
-	
+
 	for(var i in listArr){
-		
+
 		if(listArr[i].name){
-		
+
 			rettxt += createTab(ind);
 			rettxt += "- [ ] ";
 			rettxt += listArr[i].name;
@@ -139,22 +148,22 @@ function editorSubList(listArr, ind){
 				rettxt += listArr[i].date.toDateString();
 				rettxt += "**";
 			}
-			
-			rettxt += '\n';	
-			
+
+			rettxt += '\n';
+
 			if(Array.isArray(listArr[i].tlist)){
 				rettxt += editorSubList(listArr[i].tlist, ind+1);
 			}
 		}else{
-			
+
 			if(listArr[i].header){
 				rettxt += '\n';
 				rettxt += createTab(ind);
 				rettxt += listArr[i].header;
 				rettxt += '\n\n';
-			}			
-		}		
-		
+			}
+		}
+
 	}
 	return rettxt;
 }
@@ -163,58 +172,58 @@ function createTab(nr){
 	if(nr==0){
 		return '';
 	}
-	
+
 	var tab = "    ";
-	
+
 	var rettxt = '';
-	
-	for(var i = 0; i < nr; i++) { 
+
+	for(var i = 0; i < nr; i++) {
 		rettxt += tab;
 	}
-	
+
 	return rettxt;
 }
 
 /*********************************************
- * 
+ *
  * Create new list from updated editor
- * 
+ *
  */
 function newObjFromEditor(){
-	
+
 	editor.listParent.tlist = parseToDoMD(newta.value.trim());
 }
-	
+
 function parseToDoMD(editText){
-	
+
 	var textArr = editText.split("\n");
-	
+
 	var newmain = Array();
 	var newsub;
-	
+
 	var childSteps = 0;
 	var todoParent = Array();
-	
+
 	var todoPatt = /\-\s?\[\s\]/;
 	var tabPatt = /    /g;
-	
+
 	var p=0;
 	var tabs;
 	var tname, tdate, theader;
-	
+
 	for(var i = 0; i < textArr.length; i++){
-		
+
 		if(todoPatt.test(textArr[i])){
 			tabs = textArr[i].match(tabPatt);
 			if(tabs){
 				// nested
 				var t = tabs.length;
-				
+
 				if(t > childSteps){
 					//new nesting level
-					todoParent[t].tlist = Array();					
+					todoParent[t].tlist = Array();
 				}
-					
+
 				childSteps = t;
 				var childTodo = getTodo(textArr[i]);
 				todoParent[t].tlist.push(childTodo);
@@ -222,7 +231,7 @@ function parseToDoMD(editText){
 			}else{
 				// unnested
 				childSteps = 0;
-				
+
 				if(textArr[i]){
 					newmain[p] = getTodo(textArr[i]);
 					todoParent[1] = newmain[p];
@@ -234,14 +243,14 @@ function parseToDoMD(editText){
 			p++;
 		}
 	}
-	
-	return newmain; 
-	
+
+	return newmain;
+
 }
 
 function getTodo(str){
 	var roughCutArr = str.split(/\*{2}([^\*]+)(\*{2})?\s*$/);
-	
+
 	var tname = roughCutArr[0].replace(/-\s?\[\s\]/g, '');
 
 	if(roughCutArr[1] !== undefined){
@@ -249,9 +258,9 @@ function getTodo(str){
 	}else{
 		var tdate = "undef";
 	}
-	
+
 	datObj = convertDateStr(tdate);
-	
+
 	return { name: tname.trim(), date: datObj };
 }
 
@@ -272,7 +281,7 @@ function convertDateStr(tdate){
 				];
 		return new Date(dateArr.join());
 	}
-	
+
 	var d = new Date();
 
 	//Simple addition (from today)
@@ -304,7 +313,7 @@ function convertDateStr(tdate){
 
 	//Keywords
 	var krgx = /^\D+$/g;
-	if(krgx.test(tdate)){ 
+	if(krgx.test(tdate)){
 		switch(tdate) {
 			case "today":
 			case "now":
@@ -327,11 +336,9 @@ function convertDateStr(tdate){
 	}
 
 	return new Date(tdate);
-}	
+}
 
 function clearEditor(){
 	listDiv.innerHTML = '';
 	taEditDiv.innerHTML = '';
-}	
-	
-	
+}
