@@ -70,7 +70,7 @@ function createEditorButton(color, text){
 function enableSpecialKeys(){
 	//Defining keys
 	keysObj = { arr: [
-		{ key: 9, insert: "    " }, //tab
+		{ key: 9, insert: "    ", modkey: 'shiftKey' }, //Shift + tab
 		{ key: 27, func: writeMainList }, //escape
 		{ key: 13, func: saveEditorContent, modkey: 'ctrlKey' } // Ctrl + Enter
 	]};
