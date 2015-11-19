@@ -8,7 +8,11 @@ function setEditorContent(txt){
 
 function editMode(){
 	showEditor();
+
+	//Show editor tip instead
 	showEditorTip();
+	disablePrioInfoText();
+
 	editor.listParent = this.listParent;
 	writeListToEditor();
 }

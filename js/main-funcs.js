@@ -13,16 +13,19 @@ function checkStorage(){
 }
 
 function writeMainList(){
-	
+
 	//clean
 	listDiv.innerHTML = "";
 	taEditDiv.innerHTML = "";
-	
+
 	//write list
 	writeSubList(listDiv, obj.tlist, 'm');
-	
+
 	//enable folding
 	enableFolding();
+	//enable info text to describe colors
+	clearInfoText();
+	enablePrioInfoText();
 }
 
 //checkbox functionality
@@ -50,17 +53,17 @@ function writeSubList(listParent, listArr, arrRef){
 	newul=document.createElement("ul");
 	newul.setAttribute("class","task-list");
 	newul.setAttribute("id",arrRef);
-	
+
 	for(var i = 0; i < listArr.length; i ++ ){
 		newli=document.createElement("li");
-		
+
 		if(listArr[i].name){
-		
+
 			inp=document.createElement("input");
 			inp.type = "checkbox";
 			newli.appendChild(inp);
 			inp.onchange = checkChecked;
-			
+
 			hidd=document.createElement("input");
 			hidd.type = "hidden";
 			hidd.value = i;
@@ -68,22 +71,22 @@ function writeSubList(listParent, listArr, arrRef){
 
 			task=document.createElement("span");
 			task.setAttribute("class", "task");
-			newli.appendChild(task);			
+			newli.appendChild(task);
 			task.innerHTML = basicMD(listArr[i].name) + '&nbsp;';
-			
+
 			if(listArr[i].date !== undefined){
 				if(typeof(listArr[i].date == "string")){
 					listArr[i].date = new Date(listArr[i].date);
 				}
 				tdate=document.createTextNode(listArr[i].date.toDateString());
 				newstro=document.createElement("strong");
-				var prio = getPrioColor(listArr[i].date);			
+				var prio = getPrioColor(listArr[i].date);
 				listArr[i].date.prio = prio;
 				newstro.style.color = prio.color;
 				newstro.appendChild(tdate);
-				newli.appendChild(newstro);	
-			}	
-			
+				newli.appendChild(newstro);
+			}
+
 			if(Array.isArray(listArr[i].tlist)){
 				parentDiv = document.createElement("div");
 				if(listArr[i].isClosed){
@@ -94,7 +97,7 @@ function writeSubList(listParent, listArr, arrRef){
 					parentDiv.setAttribute("class", "arrow-up");
 				}
 				newli.appendChild(parentDiv);
-				
+
 				editSpan = document.createElement("span");
 				editSpan.setAttribute("class", "edit-symb");
 				editSymb = document.createTextNode("edit");
@@ -102,9 +105,9 @@ function writeSubList(listParent, listArr, arrRef){
 				editSpan.listParent = listArr[i];
 				editSpan.onclick = editMode;
 				newli.appendChild(editSpan);
-				
+
 				writeSubList(newli, listArr[i].tlist, arrRef+'-'+i);
-			}			
+			}
 		}else{
 			var text;
 			var hmatch = listArr[i].header.match(/(#+)(.+)/);
@@ -116,11 +119,11 @@ function writeSubList(listParent, listArr, arrRef){
 				text = listArr[i].header;
 			}else{
 				continue;
-			}			
+			}
 			newstro.innerHTML = basicMD(text);
 			newli.appendChild(newstro);
 		}
-		
+
 		newul.appendChild(newli);
 	}
 	listParent.appendChild(newul);
@@ -141,7 +144,7 @@ function basicMD(mdtext){
 function findArrayFromRef(refArr){
 	var r, p;
 	var n = refArr.length;
-	
+
 	//simplest case, reference to main array
 	if(n==1){
 		r = obj.tlist
@@ -156,7 +159,7 @@ function findArrayFromRef(refArr){
 function findObjFromRef(refArr){
 	var r, p;
 	var n = refArr.length;
-	
+
 	if(n<=2){
 		r = obj.tlist[refArr[1]];
 	}else{
@@ -178,12 +181,12 @@ function enableFolding(){
 	var closedPars = document.getElementsByClassName("arrow-down");
 
 	for(var o = 0; o < openPars.length; o ++ ){
-		
+
 		openPars[o].onclick = clickCloseSublist;
 	}
 
 	for(var c = 0; c < closedPars.length; c ++ ){
-		
+
 		closedPars[c].onclick = clickOpenSublist;
 	}
 }
@@ -192,9 +195,9 @@ function clickOpenSublist(){
 
 	openSubList(this.parentNode, this);
 }
-	
+
 function openSubList(parent, elem){
-	
+
 	parent.setAttribute("class", "open");
 	elem.setAttribute("class", "arrow-up");
 	elem.onclick = clickCloseSublist;
@@ -208,7 +211,7 @@ function openAll(){
 
 	var mainUl = document.getElementById("m");
 	var mainList = mainUl.getElementsByTagName("li");
-	
+
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
 			var parent = mainList[i];
@@ -222,7 +225,7 @@ function openPassed(){
 
 	var mainUl = document.getElementById("m");
 	var mainList = mainUl.getElementsByTagName("li");
-	
+
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
 			var parent = mainList[i];
@@ -239,7 +242,7 @@ function openByPrioColor(prio){
 
 	var mainUl = document.getElementById("m");
 	var mainList = mainUl.getElementsByTagName("li");
-	
+
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
 			var parent = mainList[i];
@@ -261,7 +264,7 @@ function clickOpenColor(){
 function openParents(elem){
 
 	var mainUl = document.getElementById("m");
-	
+
 	while(!(mainUl.isSameNode(elem))){
 		if(elem.tagName == "LI" && elem.className == "closed"){
 			var arrow = elem.getElementsByClassName("arrow-down")[0];
@@ -277,7 +280,7 @@ function clickCloseSublist(){
 }
 
 function closeSubList(parent, elem){
-	
+
 	parent.setAttribute("class", "closed");
 	elem.setAttribute("class", "arrow-down");
 	elem.onclick = clickOpenSublist;
@@ -291,7 +294,7 @@ function closeAll(){
 
 	var mainUl = document.getElementById("m");
 	var mainList = mainUl.getElementsByTagName("li");
-	
+
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "open"){
 			var parent = mainList[i];
@@ -308,7 +311,7 @@ function closeAll(){
 function sublistHasPassed(sublist){
 
 	var now = new Date();
-	
+
 	for(var i = 0; i < sublist.length; i ++ ){
 		var date = sublist[i].date;
 		if(date && prioColors.today != date.prio && now > date){
@@ -316,7 +319,7 @@ function sublistHasPassed(sublist){
 		}
 	}
 }
-	
+
 function sublistHasDuePrio(prio, sublist){
 
 	for(var i = 0; i < sublist.length; i ++ ){
@@ -326,65 +329,65 @@ function sublistHasDuePrio(prio, sublist){
 		}
 	}
 }
-	
+
 //return the prio color depending on the date
 function getPrioColor(date){
 
 	var prio = new Date();
 	var old = new Date();
-	
+
 	//really old?
 	old.setDate(prio.getDate() + prioColors.rold.timediff);
 	if (old>date){
 		return prioColors.rold;
 	}
-	
+
 	//old?
 	old = new Date();
 	old.setDate(prio.getDate() + prioColors.passd.timediff);
 	if (old>date){
 		return prioColors.old;
 	}
-	
+
 	//today?
-	if(prio.getDate() == date.getDate() 
+	if(prio.getDate() == date.getDate()
 	&& prio.getMonth() == date.getMonth()
 	&& prio.getYear() == date.getYear()){
 		return prioColors.today;
 	}
-	
+
 	//passed date?
 	if (prio>date){
 		return prioColors.passd;
 	}
-	
+
 	//next day?
 	prio.setDate(prio.getDate() + prioColors.nextd.timediff);
 	if (prio>date){
 		return prioColors.nextd;
 	}
-	
+
 	//within three days?
 	prio = new Date();
 	prio.setDate(prio.getDate() + prioColors.threed.timediff);
 	if (prio>date){
 		return prioColors.threed;
 	}
-	
+
 	//within a week?
 	prio = new Date();
 	prio.setDate(prio.getDate() + prioColors.week.timediff);
 	if (prio>date){
 		return prioColors.week;
 	}
-	
+
 	//within four weeks?
 	prio = new Date();
 	prio.setDate(prio.getDate() + prioColors.future.timediff);
 	if (prio>date){
 		return prioColors.upcom;
 	}
-	
+
 	//pretty far ahead
 	return prioColors.future;
 }
@@ -392,7 +395,21 @@ function getPrioColor(date){
 /*
  * Setting the info text
  */
- 
+
+function enablePrioInfoText(){
+	var prioArr = document.getElementsByClassName("prio-palette");
+	for (var i = 0; i < prioArr.length; i++){
+		prioArr[i].addEventListener('mouseover', prioDescrInfoText);
+	}
+}
+
+function disablePrioInfoText(){
+	var prioArr = document.getElementsByClassName("prio-palette");
+	for (var i = 0; i < prioArr.length; i++){
+		prioArr[i].removeEventListener('mouseover', prioDescrInfoText);
+	}
+}
+
 function prioDescrInfoText(){
 	infoText.innerHTML = this.descr;
 	infoText.style.color = this.style.backgroundColor;
@@ -403,6 +420,10 @@ function showEditorTip(){
 	infoText.style.color = "black";
 }
 
+function clearInfoText(){
+	infoText.innerHTML = "";
+}
+
 /*
  * Create nodes
  */
@@ -411,5 +432,3 @@ function createBttn(txt){
 	bttn.appendChild(document.createTextNode(txt));
 	return bttn;
 }
-
-

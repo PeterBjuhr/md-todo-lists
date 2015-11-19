@@ -1,4 +1,4 @@
-var obj; 
+var obj;
 var editor = {};
 var infoText = document.getElementById("info-text");
 
@@ -19,7 +19,7 @@ var keysSorted = Object.keys(prioColors).sort(function(a,b){
 	});
 
 var palette = document.getElementById("palette");
-	
+
 for(i = 0; i < keysSorted.length; i++) {
 	var prioCol = document.createElement("div");
 	prioCol.className = "prio-palette";
@@ -27,7 +27,6 @@ for(i = 0; i < keysSorted.length; i++) {
 	prioCol.descr = prioColors[keysSorted[i]].descr;
 	prioCol.id = keysSorted[i];
 	prioCol.onclick = clickOpenColor;
-	prioCol.onmouseover = prioDescrInfoText;
 	palette.appendChild(prioCol);
 }
 
@@ -47,7 +46,7 @@ openTodayButt.onclick = function(){
 
 //open due today button
 var openPassedButt = document.getElementById("open-passed");
-openPassedButt.onclick = openPassed;	
+openPassedButt.onclick = openPassed;
 
 var impExpDiv = document.getElementById("imp-exp-lnks");
 
