@@ -417,8 +417,8 @@ function prioDescrInfoText(){
 
 function showEditorTip(){
 	var editTip = "Use shift + Tab to create nested task.<br>" +
-								"Use Ctrl + Enter to Save.<br>" +
-								"Use Esc to Cancel";
+			"Use Ctrl + Enter to Save.<br>" +
+			"Use Esc to Cancel";
 	infoText.innerHTML = editTip;
 	infoText.style.color = "black";
 }
