@@ -24,7 +24,7 @@ label {
 }
 
 #info-text {
-	padding-left: 21%;
+	text-align: center;
 }
 
 hr.clear-float {
@@ -96,10 +96,10 @@ hr.clear-float {
 }
 
 .arrow-up {
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;	
+	border-right: 6px solid transparent;
 	border-top: 8px solid darkblue;
 	display: inline-block;
 	cursor: pointer;
@@ -107,8 +107,8 @@ hr.clear-float {
 }
 
 .arrow-down {
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 6px solid transparent;
 	border-bottom: 6px solid transparent;
 	border-right: 8px solid darkblue;
@@ -124,5 +124,3 @@ hr.clear-float {
 	font-weight: bold;
 	cursor: pointer;
 }
-
-
