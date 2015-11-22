@@ -108,14 +108,21 @@ function doSpecialKeys(e){
 }
 
 function autoIndent(){
+
+	var line = getLine();
+	var indMatch = line.match(/^(\s{4})*/);
+	insertAtSelection("\n" + indMatch[0]);
+}
+
+function getLine(){
 	var selStart = newta.selectionStart;
 	var lineStart = newta.value.substring(0, selStart).lastIndexOf("\n") + 1;
 
-	var line = newta.value.substring(lineStart, selStart);
+	return newta.value.substring(lineStart, selStart);
+}
 
-	var indMatch = line.match(/^(\s{4})*/);
-	var input = "\n" + indMatch[0];
-
+function insertAtSelection(input){
+	var selStart = newta.selectionStart;
 	newta.value = newta.value.substring(0, selStart) + input + newta.value.substring(selStart);
 	newta.selectionEnd = selStart + input.length;
 }
