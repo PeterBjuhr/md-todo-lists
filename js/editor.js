@@ -76,7 +76,8 @@ function enableSpecialKeys(){
 	keysObj = { arr: [
 		{ key: 9, insert: "    ", modkey: 'shiftKey' }, //Shift + tab
 		{ key: 27, func: writeMainList }, //escape
-		{ key: 13, func: saveEditorContent, modkey: 'ctrlKey' } // Ctrl + Enter
+		{ key: 13, func: saveEditorContent, modkey: 'ctrlKey' }, // Ctrl + Enter
+		{ key: 13, func: autoIndent }
 	]};
 
 	//Catching the keydown events
@@ -104,6 +105,19 @@ function doSpecialKeys(e){
 			}
 		}
 	}
+}
+
+function autoIndent(){
+	var selStart = newta.selectionStart;
+	var lineStart = newta.value.substring(0, selStart).lastIndexOf("\n") + 1;
+
+	var line = newta.value.substring(lineStart, selStart);
+
+	var indMatch = line.match(/^(\s{4})*/);
+	var input = "\n" + indMatch[0];
+
+	newta.value = newta.value.substring(0, selStart) + input + newta.value.substring(selStart);
+	newta.selectionEnd = selStart + input.length;
 }
 
 //Autocompletion in editor
