@@ -77,7 +77,8 @@ function enableSpecialKeys(){
 		{ key: 9, insert: "    ", modkey: 'shiftKey' }, //Shift + tab
 		{ key: 27, func: writeMainList }, //escape
 		{ key: 13, func: saveEditorContent, modkey: 'ctrlKey' }, // Ctrl + Enter
-		{ key: 13, func: autoIndent }
+		{ key: 13, func: autoIndent }, // Enter
+		{ key: 8, func: backwardsRemove } // Backspace
 	]};
 
 	//Catching the keydown events
@@ -114,6 +115,19 @@ function autoIndent(){
 	insertAtSelection("\n" + indMatch[0]);
 }
 
+function backwardsRemove(){
+	var line = getLine();
+	var indtest = /^(\s{4})+$/.test(line);
+	var cbMatch = line.match(/^\s*(-\s\[\s+\]\s*)$/);
+	if(indtest){
+		removeAtPosition(newta.selectionStart, 4);
+	}else if(cbMatch){
+		removeAtPosition(newta.selectionStart, cbMatch[1].length);
+	}else{
+		removeAtPosition(newta.selectionStart, 1);
+	}
+}
+
 function getLine(){
 	var selStart = newta.selectionStart;
 	var lineStart = newta.value.substring(0, selStart).lastIndexOf("\n") + 1;
@@ -125,6 +139,12 @@ function insertAtSelection(input){
 	var selStart = newta.selectionStart;
 	newta.value = newta.value.substring(0, selStart) + input + newta.value.substring(selStart);
 	newta.selectionEnd = selStart + input.length;
+}
+
+function removeAtPosition(position, nrTokens){
+	var usePos = position - nrTokens;
+	newta.value = newta.value.substring(0, usePos) + newta.value.substring(position);
+	newta.selectionEnd = usePos;
 }
 
 //Autocompletion in editor
