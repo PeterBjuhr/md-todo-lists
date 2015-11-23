@@ -55,9 +55,6 @@ function saveEditorContent(){
 	storeTodo();
 	writeMainList();
 	saveJson();
-	if(editor.listParent == obj){
-		closeAll();
-	}
 }
 
 function createEditorButton(color, text){
