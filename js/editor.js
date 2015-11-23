@@ -15,6 +15,15 @@ function editMode(){
 
 	editor.listParent = this.listParent;
 	writeListToEditor();
+
+	//Set editor height
+	console.log(newta.scrollHeight);
+	if(newta.scrollHeight > 619){
+		editHeight = 619;
+	}else{
+		editHeight = newta.scrollHeight + 30;
+	}
+	newta.style.height = editHeight + 'px';
 }
 /******************************************
  *
