@@ -207,10 +207,17 @@ function openSubList(parent, elem){
 	storeTodo();
 }
 
+function getMainList(){
+	if(!document.getElementById("m")){
+		writeMainList();
+	}
+	var mainUl = document.getElementById("m");
+	return mainUl.getElementsByTagName("li");
+}
+
 function openAll(){
 
-	var mainUl = document.getElementById("m");
-	var mainList = mainUl.getElementsByTagName("li");
+	var mainList = getMainList();
 
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
@@ -223,8 +230,7 @@ function openAll(){
 
 function openPassed(){
 
-	var mainUl = document.getElementById("m");
-	var mainList = mainUl.getElementsByTagName("li");
+	var mainList = getMainList();
 
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
@@ -240,8 +246,7 @@ function openPassed(){
 
 function openByPrioColor(prio){
 
-	var mainUl = document.getElementById("m");
-	var mainList = mainUl.getElementsByTagName("li");
+	var mainList = getMainList();
 
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "closed"){
@@ -292,8 +297,7 @@ function closeSubList(parent, elem){
 
 function closeAll(){
 
-	var mainUl = document.getElementById("m");
-	var mainList = mainUl.getElementsByTagName("li");
+	var mainList = getMainList();
 
 	for (var i=0; i < mainList.length; i++) {
 		if(mainList[i].className == "open"){
