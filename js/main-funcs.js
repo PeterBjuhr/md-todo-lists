@@ -400,6 +400,7 @@ function enablePrioInfoText(){
 	var prioArr = document.getElementsByClassName("prio-palette");
 	for (var i = 0; i < prioArr.length; i++){
 		prioArr[i].addEventListener('mouseover', prioDescrInfoText);
+		prioArr[i].addEventListener('mouseout', clearInfoText);
 	}
 }
 
@@ -407,6 +408,7 @@ function disablePrioInfoText(){
 	var prioArr = document.getElementsByClassName("prio-palette");
 	for (var i = 0; i < prioArr.length; i++){
 		prioArr[i].removeEventListener('mouseover', prioDescrInfoText);
+		prioArr[i].removeEventListener('mouseout', clearInfoText);
 	}
 }
 
