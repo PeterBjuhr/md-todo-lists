@@ -17,7 +17,6 @@ function editMode(){
 	writeListToEditor();
 
 	//Set editor height
-	console.log(newta.scrollHeight);
 	if(newta.scrollHeight > 619){
 		editHeight = 619;
 	}else{
