@@ -30,6 +30,7 @@ function saveJson(){
 		ajaxPost('save', 'file='+pass+'&ext=json&content='+encodeURIComponent(jsoncont));
 		ajaxPost('save', 'file='+pass+'&ext=md&content='+encodeURIComponent(mdcont));
 		ajaxPost('save', 'file=hashedpass&hash='+pass+'&salt='+createPassword());
+		ajaxPost('update_cal', 'json='+encodeURIComponent(jsoncont));
 	}
 }
 
@@ -50,7 +51,7 @@ function getPassw(){
 
 function closePassDiv(){
 	document.body.removeChild(passdiv);
-}	
+}
 
 function revertJson(){
 	pass = fetchPassword();
@@ -63,13 +64,13 @@ function revertJson(){
 		revpassdiv.appendChild(passlab);
 		revpassdiv.appendChild(passinp);
 		revertButtn.innerHTML = "Revert";
-		
+
 		passinp.onchange = function(){
 			comparePasswords(passinp.value);
 		}
 	}else{
 		getContentForRevert();
-	}	
+	}
 }
 
 function createPassword(){
@@ -81,7 +82,7 @@ function comparePasswords(userpass){
 	var resptext;
 	var count=0;
 	var resp;
-	
+
 	xmlhttp.onreadystatechange=function(){
 		if(count<maxpass){
 			if (xmlhttp.readyState==4 && xmlhttp.status==200){
@@ -109,7 +110,7 @@ function comparePasswords(userpass){
 
 function getContentForRevert(){
 	var xmlhttp=new XMLHttpRequest();
-	
+
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200){
 			importJson(xmlhttp.responseText);
@@ -127,7 +128,7 @@ function getContentForRevert(){
 function ajaxPost(phpfile, postdata){
 
 	var xmlhttp=new XMLHttpRequest();
-	
+
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200){
 			//console.log(xmlhttp.responseText);
@@ -138,4 +139,3 @@ function ajaxPost(phpfile, postdata){
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send(postdata);
 }
-
