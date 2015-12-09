@@ -16,7 +16,13 @@ function create_vevent($date, $summary){
     $ics_text .= "DTEND;VALUE=DATE:" . $caldate . "\r\n";
     $ics_text .= "DTSTAMP:" . create_dtstamp() . "\r\n";
     $ics_text .= "UID:" . uniqid() . "\r\n";
-    $ics_text .= "SUMMARY:" . $summary . "\r\n";
+    if(preg_match('/\[[^\]]+\]\((.+)\)/', $summary, $match)){
+        $cut_link = preg_replace('/\[([^\]]+)\]\(.+\)/', '$1', $summary);
+        $ics_text .= "SUMMARY:" . $cut_link . "\r\n";
+        $ics_text .= "URL;VALUE=URI:" . $match[1] . "\r\n";;
+    }else{
+        $ics_text .= "SUMMARY:" . $summary . "\r\n";
+    }
     $ics_text .= "END:VEVENT\r\n";
     return $ics_text;
 }
