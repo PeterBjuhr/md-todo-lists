@@ -27,13 +27,13 @@ function create_vevent($date, $summary){
     return $ics_text;
 }
 
-function create_from_tlist($tlist){
+function create_from_tlist($tlist, $parent=''){
     $ics_text = '';
     foreach ($tlist as $td){
         if(isset($td->date)){
-            $ics_text .= create_vevent($td->date, $td->name);
+            $ics_text .= create_vevent($td->date, $parent . ' ' . $td->name);
         }elseif (isset($td->tlist)){
-            $ics_text .= create_from_tlist($td->tlist);
+            $ics_text .= create_from_tlist($td->tlist, $td->name);
         }
     }
     return $ics_text;
