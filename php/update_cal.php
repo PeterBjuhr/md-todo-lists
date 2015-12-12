@@ -32,7 +32,8 @@ function create_from_tlist($tlist, $parent=''){
     foreach ($tlist as $td){
         if(isset($td->date)){
             $ics_text .= create_vevent($td->date, $parent . ' ' . $td->name);
-        }elseif (isset($td->tlist)){
+        }
+        if (isset($td->tlist)){
             $ics_text .= create_from_tlist($td->tlist, $td->name);
         }
     }
