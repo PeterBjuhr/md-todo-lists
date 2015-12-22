@@ -136,7 +136,7 @@ function basicMD(mdtext){
 	mdtext = mdtext.replace(/\*{1}([^\*]+)\*{1}/g, '<em>$1</em>');
 	mdtext = mdtext.replace(/`(.+)`/g, '<code>$1</code>');
 	mdtext = mdtext.replace(/~~(.+)~~/g, '<s>$1</s>');
-	mdtext = mdtext.replace(/\[(.+)\]\((.+)\)/g, '<a href="$2" target="_blank">$1</a>');
+	mdtext = mdtext.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
 
 	return mdtext;
 }
