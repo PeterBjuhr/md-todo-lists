@@ -87,6 +87,14 @@ function writeSubList(listParent, listArr, arrRef){
 				newli.appendChild(newstro);
 			}
 
+			editSpan = document.createElement("span");
+			editSpan.setAttribute("class", "edit-symb");
+			editSymb = document.createTextNode("edit");
+			editSpan.appendChild(editSymb);
+			editSpan.listParent = listArr[i];
+			editSpan.onclick = editMode;
+			newli.appendChild(editSpan);
+
 			if(Array.isArray(listArr[i].tlist)){
 				parentDiv = document.createElement("div");
 				if(listArr[i].isClosed){
@@ -97,14 +105,6 @@ function writeSubList(listParent, listArr, arrRef){
 					parentDiv.setAttribute("class", "arrow-up");
 				}
 				newli.appendChild(parentDiv);
-
-				editSpan = document.createElement("span");
-				editSpan.setAttribute("class", "edit-symb");
-				editSymb = document.createTextNode("edit");
-				editSpan.appendChild(editSymb);
-				editSpan.listParent = listArr[i];
-				editSpan.onclick = editMode;
-				newli.appendChild(editSpan);
 
 				writeSubList(newli, listArr[i].tlist, arrRef+'-'+i);
 			}
