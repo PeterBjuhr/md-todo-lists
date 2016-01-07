@@ -195,7 +195,7 @@ function detectPastedLink(e){
 			var insert = '[](' + clpbData + ')';
 			var selStart = newta.selectionStart;
 			newta.value = newta.value.substring(0, selStart) + insert +
-												newta.value.substring(selStart);
+							newta.value.substring(selStart);
 			newta.selectionEnd = selStart + 1;
 		}
 	}
