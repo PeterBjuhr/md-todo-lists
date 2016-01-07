@@ -38,8 +38,10 @@ function showEditor(){
 	taEditDiv.appendChild(newta);
 
 	//enable some extra features of the editor
+	//ToDo: use settings
 	enableSpecialKeys();
 	enableAutoreplace();
+	enablePasteControl();
 
 	newp=document.createElement("p");
 	newp.setAttribute("class",'r-align');
@@ -179,6 +181,24 @@ function insertBoldEnd(match, p1, p2, offset, str){
 	var repl = p1 + '**' + p2;
 	cursor = offset + repl.length;
 	return repl;
+}
+
+function enablePasteControl(){
+	newta.onpaste = detectPastedLink;
+}
+
+function detectPastedLink(e){
+	if (e && e.clipboardData && e.clipboardData.getData){
+		var clpbData = e.clipboardData.getData('text/plain');
+		if (/http:\/\//.test(clpbData)){
+			e.preventDefault();
+			var insert = '[](' + clpbData + ')';
+			var selStart = newta.selectionStart;
+			newta.value = newta.value.substring(0, selStart) + insert +
+												newta.value.substring(selStart);
+			newta.selectionEnd = selStart + 1;
+		}
+	}
 }
 
 /************************************
