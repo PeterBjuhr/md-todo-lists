@@ -190,7 +190,7 @@ function enablePasteControl(){
 function detectPastedLink(e){
 	if (e && e.clipboardData && e.clipboardData.getData){
 		var clpbData = e.clipboardData.getData('text/plain');
-		if (/http:\/\//.test(clpbData)){
+		if (/https?\:\/\//.test(clpbData)){
 			e.preventDefault();
 			var insert = '[](' + clpbData + ')';
 			var selStart = newta.selectionStart;
