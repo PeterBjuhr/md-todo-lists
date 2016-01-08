@@ -201,7 +201,7 @@ function openSubList(parent, elem){
 	parent.setAttribute("class", "open");
 	elem.setAttribute("class", "arrow-up");
 	elem.onclick = clickCloseSublist;
-	var refArr = elem.nextSibling.nextSibling.id.split("-");
+	var refArr = elem.nextSibling.id.split("-");
 	var parentTask = findObjFromRef(refArr);
 	parentTask.isClosed = false;
 	storeTodo();
@@ -289,7 +289,7 @@ function closeSubList(parent, elem){
 	parent.setAttribute("class", "closed");
 	elem.setAttribute("class", "arrow-down");
 	elem.onclick = clickOpenSublist;
-	var refArr = elem.nextSibling.nextSibling.id.split("-");
+	var refArr = elem.nextSibling.id.split("-");
 	var parentTask = findObjFromRef(refArr);
 	parentTask.isClosed = true;
 	storeTodo();
