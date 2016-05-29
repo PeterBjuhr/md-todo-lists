@@ -103,7 +103,7 @@ function comparePasswords(userpass){
 		}
 	}
 
-	xmlhttp.open("POST",'pass-compar.php',true);
+	xmlhttp.open("POST",'php/pass-compar.php',true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send('userpass='+userpass);
 }

@@ -1,6 +1,6 @@
 <?php
 $userpass = $_POST['userpass'];
-$hash = file_get_contents('.hashedpass');
+$hash = file_get_contents('../synced/.hashedpass');
 
 if (crypt($userpass, $hash) == $hash) {
 	echo json_encode((object) array('right'=> true));
